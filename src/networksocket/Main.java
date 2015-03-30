@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaadvanced_tchat;
+package networksocket;
 
 import gnu.getopt.Getopt;
 import gnu.getopt.LongOpt;
 import java.io.IOException;
+import java.net.InetAddress;
 
 
     
@@ -24,7 +25,7 @@ public class Main{
                 //Initialisation of the ip address and the port
                String ip = "127.0.0.1";
                int port = 31003;
-               int server = 0;
+               int serverOp = 0;
                int multicast = 0;
                int nio = 0;
                
@@ -73,7 +74,7 @@ public class Main{
 					System.out.println("The new port number for the server is : "+port);
                                         break;
                                 case 's':
-                                    server = 1;
+                                    serverOp = 1;
 					System.out.println("We run the server") ;
                                         
                                         break;
@@ -85,25 +86,30 @@ public class Main{
        
        
        /// A MODIFIER
-       if (server==1) {
-if (nio==1) {
-ServerNIO server = new ServerNIO(
-InetAddress.getByName(ip), port);
-server.start();
-} else {
-ServerThreads server = new ServerThreads(
-InetAddress.getByName(ip), port);
-server.start();
-}
-} else {
-String[] parameters = new String[3];
-parameters[0] = ip;
-parameters[1] = Integer.toString(port);
-if (multicast==1)
-parameters[2] = "1";
-else
-parameters[2] = "0";
-javafx.application.Application.launch(Client.class, parameters);
+       if (serverOp==1) {
+    if (nio==1) 
+    {
+        MyServerChannel server = new MyServerChannel(InetAddress.getByName(ip), port);
+        server.start();
+    } 
+    else 
+    {
+        MyServer server = new MyServer( InetAddress.getByName(ip), port);
+        server.start();
+    }
+    
+    } 
+       else 
+       {
+            String[] parameters = new String[3];
+            parameters[0] = ip;
+            parameters[1] = Integer.toString(port);
+            if (multicast==1)
+            parameters[2] = "1";
+            else
+            parameters[2] = "0";
+            
+            javafx.application.Application.launch(WindowsClient.class, parameters);
 
        }
            }

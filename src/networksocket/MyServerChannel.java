@@ -38,7 +38,7 @@ public class MyServerChannel {
     private Selector mySelector;
     private ServerSocketChannel serverSocketChan;
     
-    private MyServerChannel(InetAddress myAdress, int myPort)
+    MyServerChannel(InetAddress myAdress, int myPort)
     {
         address = myAdress;
         port = myPort;
