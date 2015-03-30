@@ -6,36 +6,21 @@
 package networksocket;
 
 
-
-import javafx.scene.layout.StackPane;
-
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.Socket;
 import javafx.application.Application;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /**
@@ -45,29 +30,14 @@ import javafx.stage.Stage;
 public class WindowsClient extends Application {
     
     
-    private Pane frontPane;
-private Label frontLabel;
-private Label BLLabel;
-private String ip;
-private int port;
-private TextField textArea;
-private TextField userTextField;
-private Socket socket;
-private MulticastSocket multiSocket;
-private String bufferOut;
-private volatile boolean toSend;
-private String buddyUpdate;
-private BorderPane border;
-private HBox hbox;
-private VBox Vbox;
-private BufferedReader in;
-private PrintWriter out;
 
 private VBox vbox;
 private VBox messages;
 private HBox newMessage;
 private TextField text;
  private BorderPane win;
+ 
+
     
     @Override
     public void start(Stage primaryStage) {
@@ -118,6 +88,7 @@ private TextField text;
   
     }
 
+    
     /**
      * @param args the command line arguments
      */
