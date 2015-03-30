@@ -5,7 +5,6 @@ package networksocket;
  *
  * @author Antoine
  */
-import com.sun.corba.se.spi.activation.Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,10 +16,10 @@ public class ClientHandler extends Thread implements Runnable {
 	
 	Socket socket;
 	String message;
-	Server server;
+	MyServer server;
 	HashMap <Socket, String> myMapOfClient;
 	
-	public ClientHandler (Socket s, Server server) {
+	public ClientHandler (Socket s, MyServer server) {
 		this.socket = s;
 		this.message = "";
 		this.server = server;

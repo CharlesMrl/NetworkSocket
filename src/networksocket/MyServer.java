@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Antoine
  */
-public class Server {
+public class MyServer {
   
   
   HashMap <Socket,OutputStream> myMapofMessages;
@@ -31,7 +31,7 @@ public class Server {
   
     
     //Exercice 1 lab7 : constructor with 2 parameters
-    public Server(InetAddress ip,int port) throws IOException {
+    public MyServer(InetAddress ip,int port) throws IOException {
         this.port = port;
         this.ip = ip;
     }
@@ -51,7 +51,7 @@ public class Server {
               
           }
       } catch (IOException ex) {
-          Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(MyServer.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
     
