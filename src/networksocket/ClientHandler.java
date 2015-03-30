@@ -4,8 +4,8 @@ package networksocket;
 /**
  *
  * @author Antoine
+ * 
  */
-import com.sun.corba.se.spi.activation.Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,23 +28,33 @@ public class ClientHandler extends Thread implements Runnable {
 
         @Override
 	public void run() {
-		server.transfer(socket, message);
+		
 		while(message!=null) {
                         //exercice 4 lab 7
                         try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        
+                        InputStreamReader myISR= new InputStreamReader(socket.getInputStream());
+			BufferedReader in = new BufferedReader(myISR);
 			message=in.readLine();
                         } catch (IOException e) {
 			e.printStackTrace();
                         }
                         //exercie 9 lab7
+                        //to change nickename
                         if(message.startsWith("/nick")){
+                        //if the users write "/nick " we will put his nickname to the map of client corresponding to the socket
 			myMapOfClient.put(socket, message.split(" ")[1]);
 			}
-		}
+                      
+                        if(myMapOfClient.get(socket)!=null) //if there is a client
+                        {//the given server transfer the message to the given client
+                         server.transfer(socket, myMapOfClient+" : "+message);
+                        }
+                    }
                 
                 //Exercice 6 lab 7
 		try {
+                    //when we kill a client close the socket
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
