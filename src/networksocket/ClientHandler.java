@@ -17,10 +17,10 @@ public class ClientHandler extends Thread implements Runnable {
 	
 	Socket socket;
 	String message;
-	Server server;
+	MyServer server;
 	HashMap <Socket, String> myMapOfClient;
 	
-	public ClientHandler (Socket s, Server server) {
+	public ClientHandler (Socket s, MyServer server) {
 		this.socket = s;
 		this.message = "";
 		this.server = server;

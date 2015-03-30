@@ -34,7 +34,9 @@ public class MyServerChannel {
      */
     private InetAddress address;
     private int port;
-    private HashMap <SocketChannel,OutputStream> myMapofMessages;
+    //private HashMap <SocketChannel,OutputStream> myMapofMessages;
+    private Selector mySelector;
+    private ServerSocketChannel serverSocketChan;
     
     private MyServerChannel(InetAddress myAdress, int myPort)
     {
@@ -47,9 +49,7 @@ public class MyServerChannel {
         try {
             /* variables */
             InetAddress add;
-            ServerSocketChannel serverSocketChan;
             InetSocketAddress inetSocket;
-            Selector mySelector;
             SelectionKey key;
             SocketChannel clientSocketChan = null;
             Set<SelectionKey> selectedKeys;
@@ -120,7 +120,7 @@ public class MyServerChannel {
                             getMessage = newKey.attachment() + " " + sb.toString();
                         }
                         System.out.println(getMessage);
-                        transfer(clientSocketChan, getMessage);
+                        transfer(getMessage);
                     } 
                     
                     keyIterator.remove();
@@ -138,26 +138,20 @@ public class MyServerChannel {
         
     } 
     
-    public synchronized void transfer(SocketChannel client, String message) {
+    public synchronized void transfer( String message) {
         
-        //When we enumerate the entries of a map, 
-        //the iteration yields a series of objects which implement the Map 
-        //Each one of these objects contains a key and a value.
-        //so for each entry
-        for (Map.Entry<SocketChannel, OutputStream> entry : myMapofMessages.entrySet())
-		{   
-                    //if the client does not correspond (is not the same)
-		    if(!entry.getKey().equals(client)) {
-		    	try {   //if there is a message
-		    		if(!message.isEmpty())
-                                        //write the message and come back at the line
-                                        
-					entry.getValue().write((message+"\n").getBytes());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		    }
-		    
+		ByteBuffer buf = ByteBuffer.wrap((message+"\n").getBytes());
+                
+		for (SelectionKey key : mySelector.keys()) {
+			if (key.isValid() && key.channel() instanceof SocketChannel) {
+                            try {
+                                SocketChannel newSC = (SocketChannel) key.channel();
+                                newSC.write(buf);
+                                buf.rewind();
+                            } catch (IOException ex) {
+                                Logger.getLogger(MyServerChannel.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
 		}
 	}
     
